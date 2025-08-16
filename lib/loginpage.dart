@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,10 +12,16 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar("Error", e.message.toString());
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    }
   }
 
   @override
