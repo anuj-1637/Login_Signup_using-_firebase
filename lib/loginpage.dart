@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -8,29 +9,48 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Login_Page")),
-      body: Column(
-        children: [
-          TextField(
-            controller: emailController,
-            keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: "Email",
-              label: Text("Email"),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 25),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: "Email",
+                label: Text("Email"),
+              ),
             ),
-          ),
-          TextField(
-            controller: passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            decoration: InputDecoration(
-              hintText: "Password",
-              label: Text("Password"),
+            TextField(
+              controller: passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              decoration: InputDecoration(
+                hintText: "Password",
+                label: Text("Password"),
+              ),
             ),
-          ),
-        ],
+            ElevatedButton(
+              onPressed: () {
+                signIn();
+              },
+              child: Text("Login"),
+            ),
+          ],
+        ),
       ),
     );
   }
