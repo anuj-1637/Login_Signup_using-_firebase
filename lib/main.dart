@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_login_signup/wrapper.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +74,10 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  signout() async {
+    await FirebaseAuth.instance.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -114,6 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                signout();
+              },
+              child: Text("Sign Out"),
             ),
           ],
         ),
